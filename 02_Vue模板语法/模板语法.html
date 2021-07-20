@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Vue模板语法</title>
+        <!-- 引入Vue -->
+        <script type="text/javascript" src="../vue.js"></script>
+    </head>
+    <body>
+        <!--
+            Vue模板语法有两大类：
+                1.插值语法：
+                    功能：用于解析标签体内容。
+                    写法：{{xxx}}，xxx是js表达式，且可以直接读取到data中的所有属性。
+                2.指令语法：
+                    功能：用于解析标签（包括：标签属性、标签体内容、绑定事件。。。。）
+                    举例：v-bind:href="xxx" 或 简写为 :href="xxx"，xxx同样要写js表达式，
+                        且可以直接读取到data中的所有属性。
+                    备注：Vue中有很多指令，且形式都是：v-????，此处我们只是拿v-bind举个例子。
+        -->
+        <div id="root">
+            <h1>插值语法</h1>
+            <h1>Hello，{{school.name}}</h1>
+            <hr/>
+            <h1>指令语法</h1>
+            <a v-bind:href="school.url" v-bind:x="hello">点我去百度查询姿势 1</a>
+            <a :href="url" v-bind:x="hello">点我去百度查询姿势 2</a>
+        </div>
+
+        <script type="text/javascript" >
+            Vue.config.productionTip = false // 阻止 Vue 在启动时生成生产提示。
+
+            // 创建Vue实例
+            new Vue({
+                el: '#root', // el用于指定当前Vue实例为哪个容器服务，值通常为css选择器字符串
+                data:{ // data中用于存储数据，数据供el所指定的容器去使用，值我们暂时先写成一个对象
+                    name: '切丝',
+                    url:'https://www.baidu.com',
+                    hello:'窝嫩叠',
+                    school: {
+                        name: 'Chenstyle',
+                        url: 'http://www.hsck8.com'
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
