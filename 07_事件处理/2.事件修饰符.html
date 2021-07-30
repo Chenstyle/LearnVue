@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>事件修饰符</title>
+        <!-- 引入Vue -->
+        <script type="text/javascript" src="../js/vue.js"></script>
+        <style>
+            *{
+                margin-top: 20px;
+            }
+            .demo1{
+                height: 50px;
+                background-color: skyblue;
+            }
+            .box1{
+                padding: 5px;
+                background-color: skyblue;
+            }
+            .box2{
+                padding: 5px;
+                background-color: orange;
+            }
+            .list{
+                width: 200px;
+                height: 200px;
+                background-color: peru;
+                overflow: auto;
+            }
+            li{
+                height: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <!--
+            Vue中的事件修饰符：
+                1.prevent：阻止默认事件（常用）；
+                2.stop：阻止事件冒泡（常用）；
+                3.once：事件只触发一次（常用）；
+                4.capture：使用事件的捕获模式；
+                5.self：只有event.target是当前操作的元素时才触发事件；
+                6.passive：事件的默认行为立即执行，无需等待事件回调执行完毕；
+        -->
+        <div id="root">
+            <h2>欢迎来到{{name}}学习</h2>
+
+            <!-- 阻止默认事件（常用） -->
+            <a href="https://www.baidu.com" @click.prevent="showInfo">点我提示信息</a>
+
+            <!-- 阻止事件冒泡（常用） -->
+            <!-- 嵌套的元素当都存在事件的时候，内部的事件相应后，外部的事件也会进行响应。阻止事件冒泡的用意在于不让外部元素响应内部事件 -->
+            <div class="demo1" @click="showInfo">
+                <button @click.stop="showInfo">点我提示信息</button>
+                <!-- 修饰符可以连续写 -->
+                <!-- <a href="https://www.baidu.com" @click.stop.prevent="showInfo">点我提示信息</a> -->
+            </div>
+
+            <!-- 事件只触发一次（常用） -->
+            <button @click.once="showInfo">点我提示信息</button>
+
+            <!-- 使用事件的捕获模式 -->
+            <div class="box1" @click.capture="showMsg(1)">
+                div1
+                <div class="box2" @click="showMsg(2)">
+                    div2
+                </div>
+            </div>
+
+            <!-- 只有event.target是当前操作的元素时才触发事件 -->
+            <div class="demo1" @click.self="showInfo">
+                <button @click="showInfo">点我提示信息</button>
+            </div>
+
+            <!-- 事件的默认行为立即执行，无需等待事件回调执行完毕 -->
+            <ul @wheel.passive="demo" class="list">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4 </li>
+            </ul>
+        </div>
+
+        <script type="text/javascript" >
+            Vue.config.productionTip = false // 阻止 Vue 在启动时生成生产提示。
+
+            new Vue({
+                el:'#root',
+                data:{
+                    name:'Chenstyle的书房'
+                },
+                methods:{
+                    showInfo(e) {
+                        // alert("提示个锤子哦")
+                        console.log(e.target)
+                    },
+                    showMsg(msg) {
+                        console.log(msg)
+                    },
+                    demo(){
+                        console.log("@")
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
